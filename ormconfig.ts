@@ -4,7 +4,7 @@ function createConnectionOptions() {
     database: 'database.sqlite',
 
     synchronize: true,
-    // dropSchema: true && fastify.config.ENV !== 'production',
+    // dropSchema: true, // recreates the schema. wipes all data.
     logging: true,
     entities: ['dist/entity/*{.ts,.js}'],
     migrations: ['dist/migration/**/*{.ts,.js}'],
@@ -17,6 +17,7 @@ function createConnectionOptions() {
   };
   const { PG_DATABASE, PG_HOST, PG_USER, PG_PASSWD, PG_PORT } = process.env;
 
+  // if the environment is set for postgres use it
   if (PG_DATABASE && PG_HOST && PG_USER && PG_PASSWD && PG_PORT) {
     return {
       ...defaultConfig,

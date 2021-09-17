@@ -9,7 +9,8 @@ export class seed1631906022413 implements MigrationInterface {
     const hashedPassword = bcrypt.hashSync(salt + password, hashSalt);
 
     await queryRunner.query(
-      `INSERT INTO user(firstname, lastname, username, password, salt, isAdmin) VALUES ('Admin', 'Admin', 'admin', '${hashedPassword}', '${salt}',true);`,
+      `INSERT INTO "user"(firstname, lastname, username, password, salt, "isAdmin") 
+      VALUES ('Admin', 'Admin', 'admin', '${hashedPassword}', '${salt}',true);`,
     );
   }
 
