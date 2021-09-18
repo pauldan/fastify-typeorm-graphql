@@ -2,6 +2,7 @@ import {
   Arg,
   Ctx,
   FieldResolver,
+  Int,
   Mutation,
   Query,
   Resolver,
@@ -40,5 +41,26 @@ export class PostResolver {
     }).save();
 
     return post;
+  }
+
+  @UseMiddleware(AuthGuard)
+  @Mutation(() => Int, { nullable: true })
+  async deletePost(
+    @Arg('id', () => Int) id: number,
+    @Ctx() { userId, isAdmin }: Context,
+  ): Promise<number | null> {
+    const criteria: { id: number; creatorId?: number } = { id };
+
+    if (!isAdmin) {
+      criteria.creatorId = userId;
+    }
+
+    const res = await Post.delete({ id, creatorId: userId });
+
+    if (res?.affected && res.affected > 0) {
+      return id;
+    }
+
+    return null;
   }
 }
