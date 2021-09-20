@@ -16,7 +16,7 @@ To run the migration execute `npm run typeorm migration:run`
 
 On windows either add gitbash as script-shell for npm by running
 
-`npm config get script-shell "c:\\path\\to\\bash.exe`
+`npm config get script-shell "c:\\path\\to\\bash.exe`"
 
 or remove
 
